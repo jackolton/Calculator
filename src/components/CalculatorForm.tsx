@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'preact/hooks';
+import { useState, useMemo, useRef, useEffect } from 'preact/hooks';
 import { formulas } from '../lib/formulas/index';
 
 type InputSpec = {
@@ -43,6 +43,21 @@ function fmtInput(value: number, type: string): string {
   return String(value);
 }
 
+function useFlash(value: unknown) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const prev = useRef(value);
+  useEffect(() => {
+    if (prev.current !== value && ref.current) {
+      ref.current.animate(
+        [{ opacity: 0.3, transform: 'scale(0.97)' }, { opacity: 1, transform: 'scale(1)' }],
+        { duration: 220, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'forwards' }
+      );
+    }
+    prev.current = value;
+  }, [value]);
+  return ref;
+}
+
 export default function CalculatorForm({ inputs, outputs, formulaId }: Props) {
   const [values, setValues] = useState<Record<string, number>>(
     () => Object.fromEntries(inputs.map((i) => [i.id, i.default]))
@@ -55,6 +70,12 @@ export default function CalculatorForm({ inputs, outputs, formulaId }: Props) {
     const fn = formulas[formulaId];
     return fn ? fn(values) : {};
   }, [values, formulaId]);
+
+  const primaryOutputs   = outputs.filter((o) => o.highlight);
+  const secondaryOutputs = outputs.filter((o) => !o.highlight);
+
+  const primaryValue = primaryOutputs[0] ? fmt(results[primaryOutputs[0].id] ?? 0, primaryOutputs[0].format) : '—';
+  const flashRef = useFlash(primaryValue);
 
   function handleChange(id: string, raw: string) {
     setRawValues((prev) => ({ ...prev, [id]: raw }));
@@ -69,63 +90,64 @@ export default function CalculatorForm({ inputs, outputs, formulaId }: Props) {
     setRawValues((prev) => ({ ...prev, [id]: String(values[id] ?? '') }));
   }
 
-  const primaryOutputs   = outputs.filter((o) => o.highlight);
-  const secondaryOutputs = outputs.filter((o) => !o.highlight);
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Inputs grid */}
-      <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+      {/* Inputs */}
+      <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
         {inputs.map((input) => (
           <div key={input.id}>
             <label class="label" for={`field-${input.id}`}>{input.label}</label>
             <div style={{ position: 'relative' }}>
               {input.type === 'currency' && (
-                <span style={{ position: 'absolute', inset: '0 auto 0 12px', display: 'flex', alignItems: 'center', pointerEvents: 'none', color: 'var(--color-text-muted)', fontSize: '14px', userSelect: 'none' }}>$</span>
+                <span style={{ position: 'absolute', inset: '0 auto 0 11px', display: 'flex', alignItems: 'center', pointerEvents: 'none', color: 'var(--color-text-muted)', fontSize: '14px', userSelect: 'none' }}>$</span>
               )}
               <input
                 id={`field-${input.id}`}
                 type="text"
                 inputMode="decimal"
                 class="input-field"
-                style={{ paddingLeft: input.type === 'currency' ? '24px' : '12px', paddingRight: input.type === 'percent' ? '24px' : '12px' }}
+                style={{ paddingLeft: input.type === 'currency' ? '22px' : '12px', paddingRight: input.type === 'percent' ? '22px' : '12px' }}
                 value={rawValues[input.id] ?? ''}
                 onInput={(e) => handleChange(input.id, (e.target as HTMLInputElement).value)}
                 onBlur={() => handleBlur(input.id, input.type)}
                 onFocus={() => handleFocus(input.id)}
               />
               {input.type === 'percent' && (
-                <span style={{ position: 'absolute', inset: '0 12px 0 auto', display: 'flex', alignItems: 'center', pointerEvents: 'none', color: 'var(--color-text-muted)', fontSize: '14px', userSelect: 'none' }}>%</span>
+                <span style={{ position: 'absolute', inset: '0 11px 0 auto', display: 'flex', alignItems: 'center', pointerEvents: 'none', color: 'var(--color-text-muted)', fontSize: '14px', userSelect: 'none' }}>%</span>
               )}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Results panel — Drive's selected-item blue tint */}
+      {/* Results panel */}
       <div style={{
         background: 'var(--color-primary-lt)',
         border: '1px solid var(--color-primary-border)',
         borderRadius: 'var(--radius-lg)',
+        borderTop: '3px solid var(--color-primary)',
+        overflow: 'hidden',
         padding: '24px',
       }}>
+        {/* Primary output */}
         {primaryOutputs.map((output) => (
           <div key={output.id} style={{ textAlign: 'center', paddingBottom: secondaryOutputs.length ? '20px' : '0' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
+            <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '8px', fontFamily: 'var(--font-body)' }}>
               {output.label}
             </p>
-            <p class="result-primary">
+            <p class="result-primary" ref={output === primaryOutputs[0] ? flashRef : undefined}>
               {fmt(results[output.id] ?? 0, output.format)}
             </p>
           </div>
         ))}
 
+        {/* Secondary outputs */}
         {secondaryOutputs.length > 0 && (
-          <div style={{ borderTop: '1px solid var(--color-primary-border)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ borderTop: '1px solid var(--color-primary-border)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {secondaryOutputs.map((output) => (
               <div key={output.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', margin: 0 }}>{output.label}</p>
-                <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--color-text)', fontVariantNumeric: 'tabular-nums', margin: 0 }}>
+                <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', margin: 0, fontFamily: 'var(--font-body)' }}>{output.label}</p>
+                <p class="result-secondary" style={{ margin: 0 }}>
                   {fmt(results[output.id] ?? 0, output.format)}
                 </p>
               </div>
