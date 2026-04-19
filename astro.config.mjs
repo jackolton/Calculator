@@ -2,11 +2,15 @@ import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
 import tailwind from '@astrojs/tailwind';
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
   integrations: [
     preact({ compat: false }),
     tailwind({ applyBaseStyles: false }),
   ],
-  output: 'static',
+
+  output: "hybrid",
   site: 'https://reicalcs.com',
+  adapter: cloudflare()
 });
