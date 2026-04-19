@@ -6,8 +6,8 @@ import AffiliateCTA from '../components/AffiliateCTA.astro';
 import FAQBlock from '../components/FAQBlock.astro';
 import RelatedCalcs from '../components/RelatedCalcs.astro';
 import { marked } from 'marked';
-import fs from 'node:fs';
-import path from 'node:path';
+
+const explainers = import.meta.glob<string>('../explainers/*.md', { query: '?raw', import: 'default', eager: true });
 
 export async function getStaticPaths() {
   const calcs = getAllCalcs();
@@ -17,8 +17,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const spec = getCalcBySlug(slug!)!;
 
-const mdPath = path.join(process.cwd(), 'src/explainers', `${spec.formula}.md`);
-const mdRaw = fs.existsSync(mdPath) ? fs.readFileSync(mdPath, 'utf-8') : '';
+const mdRaw = explainers[`../explainers/${spec.formula}.md`] ?? '';
 const contentHtml = marked(mdRaw);
 ---
 
