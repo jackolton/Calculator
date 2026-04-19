@@ -5,19 +5,23 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<section class="mt-10">
-  <h2 class="mb-6">Frequently asked questions</h2>
-  <dl class="space-y-4">
-    {items.map((item) => (
-      <details class="group rounded-lg border border-slate-200 bg-white">
-        <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 font-medium text-slate-900 marker:content-none">
-          {item.question}
-          <svg class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-          </svg>
-        </summary>
-        <div class="px-5 pb-4 text-sm text-slate-600 leading-relaxed">{item.answer}</div>
-      </details>
-    ))}
-  </dl>
-</section>
+{items.length > 0 && (
+  <section style="margin-top: 40px;">
+    <h2 style="margin-bottom: 16px;">Frequently asked questions</h2>
+    <dl style="display: flex; flex-direction: column; gap: 8px;">
+      {items.map((item) => (
+        <details class="group" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
+          <summary style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; font-size: 14px; font-weight: 500; color: var(--color-text); list-style: none; transition: background 100ms;" class="hover:bg-google-hover marker:content-none">
+            {item.question}
+            <svg class="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" style="color: var(--color-text-muted); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </summary>
+          <div style="padding: 0 16px 14px; font-size: 14px; color: var(--color-text-muted); line-height: 1.6; border-top: 1px solid var(--color-divider);">
+            {item.answer}
+          </div>
+        </details>
+      ))}
+    </dl>
+  </section>
+)}

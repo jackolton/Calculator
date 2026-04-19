@@ -20,11 +20,11 @@ const spec = getCalcBySlug(slug!)!;
   <title>{spec.title}</title>
   <meta name="robots" content="noindex" />
 </head>
-<body class="bg-white p-4">
-  <h1 class="text-xl font-bold mb-4">{spec.h1}</h1>
+<body style="background: var(--color-bg); padding: 16px; margin: 0;">
+  <p style="font-size: 13px; font-weight: 500; color: var(--color-text); margin: 0 0 12px;">{spec.h1}</p>
   <Calculator spec={spec} />
-  <p class="mt-4 text-xs text-slate-400 text-center">
-    Powered by <a href={`https://reicalcs.com/${spec.slug}`} target="_blank" class="underline">REI Calcs</a>
+  <p style="margin-top: 12px; font-size: 11px; color: var(--color-text-muted); text-align: center;">
+    Powered by <a href={`https://reicalcs.com/${spec.slug}`} target="_blank" style="color: var(--color-primary); text-decoration: none;">REI Calcs</a>
   </p>
 </body>
 </html>

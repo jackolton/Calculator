@@ -9,19 +9,22 @@ const calcs = slugs.map(getCalcMeta).filter(Boolean);
 ---
 
 {calcs.length > 0 && (
-  <section class="mt-10">
-    <h2 class="mb-4">Related calculators</h2>
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  <section style="margin-top: 40px;">
+    <h2 style="margin-bottom: 16px;">Related calculators</h2>
+    <ul style="display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); list-style: none; padding: 0; margin: 0;">
       {calcs.map((calc) => (
         <li>
           <a
             href={`/${calc!.slug}`}
-            class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:border-blue-300 hover:text-blue-700 transition-colors"
+            class="card card-hover"
+            style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; text-decoration: none;"
           >
-            <svg class="h-4 w-4 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z" />
-            </svg>
-            {calc!.title}
+            <div style="width: 36px; height: 36px; background: var(--color-primary-lt); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg style="width: 18px; height: 18px; color: var(--color-primary);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z" />
+              </svg>
+            </div>
+            <span style="font-size: 14px; font-weight: 500; color: var(--color-text); transition: color 150ms;" class="group-hover:text-google-blue">{calc!.title}</span>
           </a>
         </li>
       ))}

@@ -26,77 +26,87 @@ const ogImage = `/og/${spec.slug}.svg`;
   <meta name="description" content={spec.metaDescription} />
   <link rel="canonical" href={canonicalUrl} />
 
-  <!-- OG / Twitter -->
-  <meta property="og:title"       content={spec.metaTitle} />
-  <meta property="og:description" content={spec.metaDescription} />
-  <meta property="og:image"       content={`https://reicalcs.com${ogImage}`} />
-  <meta property="og:url"         content={canonicalUrl} />
-  <meta property="og:type"        content="website" />
-  <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content={spec.metaTitle} />
+  <meta property="og:title"        content={spec.metaTitle} />
+  <meta property="og:description"  content={spec.metaDescription} />
+  <meta property="og:image"        content={`https://reicalcs.com${ogImage}`} />
+  <meta property="og:url"          content={canonicalUrl} />
+  <meta property="og:type"         content="website" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={spec.metaTitle} />
   <meta name="twitter:description" content={spec.metaDescription} />
-  <meta name="twitter:image"      content={`https://reicalcs.com${ogImage}`} />
+  <meta name="twitter:image"       content={`https://reicalcs.com${ogImage}`} />
 
-  <!-- JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(schemaApp)} />
   <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
   <script type="application/ld+json" set:html={JSON.stringify(schemaBc)} />
 
-  <!-- Plausible -->
   <script defer data-domain="reicalcs.com" src="https://plausible.io/js/script.js"></script>
-
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
-<body class="min-h-screen bg-white">
+<body style="min-height: 100vh; background-color: var(--color-bg);">
 
-  <!-- Nav -->
-  <header class="border-b border-slate-200 bg-white sticky top-0 z-10">
-    <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-      <a href="/" class="font-bold text-navy-900 text-lg tracking-tight">REI Calcs</a>
-      <details class="relative group">
-        <summary class="cursor-pointer list-none flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors marker:content-none">
+  <!-- App bar -->
+  <header style="background: var(--color-surface); border-bottom: 1px solid var(--color-divider); position: sticky; top: 0; z-index: 10;">
+    <nav style="max-width: 1024px; margin: 0 auto; padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" style="font-size: 18px; font-weight: 500; color: var(--color-text); text-decoration: none; letter-spacing: -0.01em;">
+        REI Calcs
+      </a>
+      <details class="group" style="position: relative;">
+        <summary style="cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--color-text-muted); padding: 6px 12px; border-radius: var(--radius-pill); transition: background 150ms;" class="hover:bg-google-hover marker:content-none">
           All Calcs
           <svg class="h-4 w-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
           </svg>
         </summary>
-        <div class="absolute right-0 top-full mt-2 w-64 rounded-xl border border-slate-200 bg-white shadow-lg py-2 z-20">
+        <div style="position: absolute; right: 0; top: calc(100% + 4px); width: 240px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lift); padding: 4px 0; z-index: 20;">
           {allCalcs.map((c) => (
-            <a href={`/${c.slug}`} class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">{c.title}</a>
+            <a
+              href={`/${c.slug}`}
+              style="display: block; padding: 10px 16px; font-size: 14px; color: var(--color-text); text-decoration: none; transition: background 100ms;"
+              class="hover:bg-google-hover"
+            >{c.title}</a>
           ))}
         </div>
       </details>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-3xl px-4 py-10">
+  <main style="max-width: 672px; margin: 0 auto; padding: 36px 20px 64px;">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-muted); margin-bottom: 20px;">
+      <a href="/" style="color: var(--color-primary); text-decoration: none;">REI Calcs</a>
+      <span aria-hidden="true">›</span>
+      <span>{spec.title}</span>
+    </nav>
+
     <!-- Hero -->
-    <div class="mb-8">
-      <h1 class="mb-2">{spec.h1}</h1>
-      <p class="text-slate-500 text-base">{spec.tagline || spec.metaDescription}</p>
+    <div style="margin-bottom: 24px;">
+      <h1 style="margin-bottom: 8px;">{spec.h1}</h1>
+      <p style="font-size: 14px; color: var(--color-text-muted); line-height: 1.6; margin: 0;">{spec.tagline || spec.metaDescription}</p>
     </div>
 
     <!-- Calculator widget -->
     <slot name="calculator" />
 
     <!-- Affiliate CTA -->
-    <div class="mt-5">
+    <div style="margin-top: 16px;">
       <slot name="affiliate" />
     </div>
 
     <!-- Embed snippet -->
-    <details class="mt-6 group">
-      <summary class="cursor-pointer text-sm text-slate-500 hover:text-slate-700 marker:content-none flex items-center gap-1.5">
+    <details class="group" style="margin-top: 20px;">
+      <summary style="cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--color-text-muted); transition: color 150ms;" class="hover:text-google-text marker:content-none">
         <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
         </svg>
         Embed this calculator
       </summary>
-      <div class="mt-3 rounded-lg bg-slate-50 border border-slate-200 p-4">
-        <pre class="text-xs text-slate-600 overflow-x-auto whitespace-pre-wrap"><code>{`<iframe src="https://reicalcs.com/embed/${spec.slug}" width="100%" height="420" frameborder="0" title="${spec.title}" loading="lazy"></iframe>`}</code></pre>
+      <div style="margin-top: 12px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+        <pre style="font-size: 11px; color: var(--color-text-muted); overflow-x: auto; white-space: pre-wrap; margin: 0;"><code>{`<iframe src="https://reicalcs.com/embed/${spec.slug}" width="100%" height="420" frameborder="0" title="${spec.title}" loading="lazy"></iframe>`}</code></pre>
         <button
           onclick={`navigator.clipboard.writeText('<iframe src="https://reicalcs.com/embed/${spec.slug}" width="100%" height="420" frameborder="0" title="${spec.title}" loading="lazy"></iframe>').then(()=>{this.textContent='Copied!';setTimeout(()=>{this.textContent='Copy embed code'},2000)})`}
-          class="mt-2 text-xs font-medium text-blue-600 hover:underline"
+          style="margin-top: 10px; font-size: 12px; font-weight: 500; color: var(--color-primary); background: none; border: none; cursor: pointer; padding: 0;"
         >
           Copy embed code
         </button>
@@ -104,7 +114,7 @@ const ogImage = `/og/${spec.slug}.svg`;
     </details>
 
     <!-- Explainer content -->
-    <article class="mt-12 prose prose-slate max-w-none prose-headings:font-semibold prose-a:text-blue-600">
+    <article class="prose-drive" style="margin-top: 48px;">
       <slot name="content" />
     </article>
 
@@ -115,11 +125,11 @@ const ogImage = `/og/${spec.slug}.svg`;
     <slot name="related" />
   </main>
 
-  <footer class="border-t border-slate-200 mt-16 py-8 text-center text-xs text-slate-400">
-    <div class="mx-auto max-w-5xl px-4 flex flex-wrap items-center justify-center gap-4">
+  <footer style="border-top: 1px solid var(--color-divider); padding: 28px 20px; text-align: center;">
+    <div style="max-width: 1024px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; font-size: 12px; color: var(--color-text-muted);">
       <span>&copy; {new Date().getFullYear()} REI Calcs</span>
-      <a href="/how-we-make-money" class="hover:text-slate-600">How we make money</a>
-      <a href="/privacy" class="hover:text-slate-600">Privacy</a>
+      <a href="/how-we-make-money" style="color: var(--color-text-muted); text-decoration: none; transition: color 150ms;" class="hover:text-google-text">How we make money</a>
+      <a href="/privacy" style="color: var(--color-text-muted); text-decoration: none; transition: color 150ms;" class="hover:text-google-text">Privacy</a>
     </div>
   </footer>
 
