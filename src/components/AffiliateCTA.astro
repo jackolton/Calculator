@@ -1,0 +1,21 @@
+---
+interface Props {
+  partner: string;
+  headline: string;
+  cta: string;
+  url: string;
+}
+const { headline, cta, url } = Astro.props;
+---
+
+<div class="rounded-xl border border-blue-100 bg-blue-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
+  <p class="flex-1 text-sm font-medium text-slate-700">{headline}</p>
+  <a
+    href={url}
+    rel="sponsored nofollow"
+    target="_blank"
+    class="btn-primary shrink-0 text-center"
+  >
+    {cta}
+  </a>
+</div>

@@ -1,0 +1,30 @@
+---
+import '../../styles/tokens.css';
+import { getAllCalcs, getCalcBySlug } from '../../lib/calcs';
+import Calculator from '../../components/Calculator.astro';
+
+export async function getStaticPaths() {
+  const calcs = getAllCalcs();
+  return calcs.map((spec) => ({ params: { slug: spec.slug } }));
+}
+
+const { slug } = Astro.params;
+const spec = getCalcBySlug(slug!)!;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{spec.title}</title>
+  <meta name="robots" content="noindex" />
+</head>
+<body class="bg-white p-4">
+  <h1 class="text-xl font-bold mb-4">{spec.h1}</h1>
+  <Calculator spec={spec} />
+  <p class="mt-4 text-xs text-slate-400 text-center">
+    Powered by <a href={`https://reicalcs.com/${spec.slug}`} target="_blank" class="underline">REI Calcs</a>
+  </p>
+</body>
+</html>

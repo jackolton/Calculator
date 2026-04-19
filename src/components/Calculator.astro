@@ -1,0 +1,18 @@
+---
+import CalculatorForm from './CalculatorForm';
+import type { CalcSpec } from '../lib/types';
+
+interface Props {
+  spec: CalcSpec;
+}
+const { spec } = Astro.props;
+---
+
+<div class="card p-6">
+  <CalculatorForm
+    client:load
+    inputs={spec.inputs}
+    outputs={spec.outputs}
+    formulaId={spec.formula}
+  />
+</div>

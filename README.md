@@ -7,7 +7,7 @@ Programmatic SEO calculator site for real estate investors. 50–100 narrow calc
 - [Astro](https://astro.build) — static site generator
 - Preact — interactive calculator widgets (islands architecture)
 - Tailwind CSS — styling
-- Cloudflare Pages — hosting and auto-deploy from `main`
+- Cloudflare Pages — hosting and auto-deploy from `master`
 - Plausible — analytics
 
 ## Development
@@ -39,7 +39,7 @@ Custom slash commands for this project:
 
 ## Deployment
 
-Pushes to `main` auto-deploy via Cloudflare Pages. Preview URL is shown in the Cloudflare Pages dashboard. Custom domain configured under Pages → Custom Domains.
+Pushes to `master` auto-deploy via Cloudflare Pages. Preview URL is shown in the Cloudflare Pages dashboard. Custom domain configured under Pages → Custom Domains.
 
 ## Structure
 

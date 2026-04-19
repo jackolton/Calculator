@@ -1,0 +1,31 @@
+---
+import { getAllCalcs, getCalcBySlug } from '../lib/calcs';
+import CalcLayout from '../layouts/CalcLayout.astro';
+import Calculator from '../components/Calculator.astro';
+import AffiliateCTA from '../components/AffiliateCTA.astro';
+import FAQBlock from '../components/FAQBlock.astro';
+import RelatedCalcs from '../components/RelatedCalcs.astro';
+import { marked } from 'marked';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  const calcs = getAllCalcs();
+  return calcs.map((spec) => ({ params: { slug: spec.slug } }));
+}
+
+const { slug } = Astro.params;
+const spec = getCalcBySlug(slug!)!;
+
+const mdPath = path.join(process.cwd(), 'src/explainers', `${spec.formula}.md`);
+const mdRaw = fs.existsSync(mdPath) ? fs.readFileSync(mdPath, 'utf-8') : '';
+const contentHtml = marked(mdRaw);
+---
+
+<CalcLayout spec={spec}>
+  <Calculator slot="calculator" spec={spec} />
+  <AffiliateCTA slot="affiliate" {...spec.affiliate} />
+  <Fragment slot="content" set:html={contentHtml} />
+  <FAQBlock slot="faq" items={spec.faq ?? []} />
+  <RelatedCalcs slot="related" slugs={spec.relatedCalcs ?? []} />
+</CalcLayout>

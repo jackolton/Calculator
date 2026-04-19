@@ -11,7 +11,7 @@ The calculator is the product. The written content exists to rank the calc. Ever
 - **Framework:** Astro (static site generation, zero JS on non-interactive pages).
 - **Interactive islands:** Preact inside Astro components for the calculator widgets.
 - **Styling:** Tailwind CSS. Navy/blue palette — see `src/styles/tokens.css` for the full design system. Match visual language to other projects in Jack's portfolio (personal dashboard, journal).
-- **Deployment:** Cloudflare Pages, auto-deploys from `main` branch on every `git push`.
+- **Deployment:** Cloudflare Pages, auto-deploys from `master` branch on every `git push`.
 - **Analytics:** Plausible (cookie-less, no banner needed).
 - **Email capture:** ConvertKit free tier, embedded via `<script>` tag on relevant calcs.
 

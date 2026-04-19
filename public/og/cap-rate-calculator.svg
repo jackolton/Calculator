@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#111c5c"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="#1534e0" fill-opacity="0.3"/>
+  <text x="100" y="200" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="white">Cap Rate Calculator</text>
+  <text x="100" y="280" font-family="system-ui, sans-serif" font-size="32" fill="#93b4ff">Calculate cap rate for any rental property in seconds.</text>
+  <rect x="100" y="340" width="400" height="120" rx="16" fill="white" fill-opacity="0.1"/>
+  <text x="140" y="395" font-family="system-ui, sans-serif" font-size="20" fill="#93b4ff">Cap Rate</text>
+  <text x="140" y="440" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="white">6.72%</text>
+  <text x="100" y="530" font-family="system-ui, sans-serif" font-size="24" fill="#6090ff">reicalcs.com/cap-rate-calculator</text>
+</svg>

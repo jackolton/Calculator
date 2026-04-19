@@ -1,0 +1,44 @@
+{
+  "slug": "cap-rate-calculator",
+  "title": "Cap Rate Calculator",
+  "h1": "Cap Rate Calculator",
+  "metaTitle": "Cap Rate Calculator — Free Real Estate Investor Tool",
+  "metaDescription": "Calculate cap rate for any rental property in 10 seconds. Enter price, rent, and expenses — no signup required.",
+  "primaryKeyword": "cap rate calculator",
+  "tagline": "Enter your numbers and see the cap rate instantly.",
+  "relatedCalcs": ["cash-on-cash-calculator", "gross-rent-multiplier-calculator", "noi-calculator"],
+  "inputs": [
+    { "id": "price",        "label": "Purchase Price",                   "type": "currency", "default": 300000, "min": 1 },
+    { "id": "grossRent",    "label": "Monthly Gross Rent",               "type": "currency", "default": 2800,   "min": 0 },
+    { "id": "expenseRatio", "label": "Operating Expenses (% of rent)",   "type": "percent",  "default": 40,     "min": 0, "max": 100 }
+  ],
+  "outputs": [
+    { "id": "capRate", "label": "Cap Rate",                      "format": "percent",  "highlight": true },
+    { "id": "noi",     "label": "Net Operating Income (annual)", "format": "currency", "highlight": false }
+  ],
+  "formula": "cap-rate",
+  "faq": [
+    {
+      "question": "What is a good cap rate for rental property?",
+      "answer": "Most investors target 5–10%. Below 5% is common in high-cost coastal markets where appreciation is the thesis. Above 10% often signals higher vacancy risk or deferred maintenance — run the numbers carefully."
+    },
+    {
+      "question": "Does cap rate include mortgage payments?",
+      "answer": "No. Cap rate uses Net Operating Income divided by purchase price. NOI is pre-financing — it excludes mortgage principal and interest. That's intentional: it lets you compare properties independent of how each one is financed."
+    },
+    {
+      "question": "What expenses go into the operating expense ratio?",
+      "answer": "Property taxes, insurance, maintenance, property management fees (typically 8–12%), vacancy allowance (5–10%), and reserves for capital expenditures. A 40–50% expense ratio is a reasonable starting assumption for a single-family rental."
+    },
+    {
+      "question": "How is cap rate different from cash-on-cash return?",
+      "answer": "Cap rate ignores financing. Cash-on-cash return accounts for your actual loan payments and measures your annual cash flow against the cash you put in. Use cap rate to compare deals; use cash-on-cash to evaluate your actual return given your specific financing."
+    }
+  ],
+  "affiliate": {
+    "partner": "Stessa",
+    "headline": "Track this property's performance for free",
+    "cta": "Open a Stessa account →",
+    "url": "https://stessa.com/?ref=REPLACE_ME"
+  }
+}
